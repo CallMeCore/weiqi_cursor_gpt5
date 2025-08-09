@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>在线围棋 - 人机对战</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1>在线围棋 - 人机对战</h1>
+        <div class="controls">
+          <label>棋盘大小
+            <select id="boardSize">
+              <option value="19" selected>19</option>
+              <option value="13">13</option>
+              <option value="9">9</option>
+            </select>
+          </label>
+          <label>贴目
+            <input id="komi" type="number" step="0.5" value="7.5" />
+          </label>
+          <label>人类执
+            <select id="humanColor">
+              <option value="B" selected>黑</option>
+              <option value="W">白</option>
+            </select>
+          </label>
+          <button id="startBtn">开始对局</button>
+          <button id="passBtn" disabled>停一手</button>
+          <label><input id="toggleLog" type="checkbox" /> 显示日志</label>
+        </div>
+      </header>
+      <main>
+        <canvas id="board" width="760" height="760"></canvas>
+        <aside class="panel">
+          <div id="status">未开始</div>
+          <div id="log" class="log"></div>
+        </aside>
+      </main>
+    </div>
+    <script src="/main.js"></script>
+  </body>
+</html>
+
+
