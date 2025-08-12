@@ -1,0 +1,32 @@
+# Cloud-friendly image: bundles KataGo (Linux CPU Eigen) and model during build
+FROM node:20-bullseye-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl unzip tini \
+  && rm -rf /var/lib/apt/lists/*
+
+# Copy project
+COPY web ./web
+COPY server ./server
+
+# Fetch KataGo (Linux CPU Eigen) and a public model into server/katago-linux
+# You can change URLs to a different model/version if desired
+RUN set -eux; \
+  mkdir -p /app/server/katago-linux; cd /app/server/katago-linux; \
+  curl -L -o katago.zip "https://github.com/lightvector/KataGo/releases/download/v1.16.3/katago-v1.16.3-eigen-linux-x64.zip"; \
+  unzip -q katago.zip; \
+  mv katago-v1.16.3-eigen-linux-x64/katago ./katago; \
+  chmod +x ./katago; \
+  rm -rf katago.zip katago-v1.16.3-eigen-linux-x64; \
+  curl -L -o default_model.bin.gz "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b28c512nbt-s9584861952-d4960414494.bin.gz"; \
+  curl -L -o default_gtp.cfg "https://raw.githubusercontent.com/lightvector/KataGo/master/cpp/configs/gtp_example.cfg";
+
+WORKDIR /app/server
+RUN npm ci || npm install
+
+EXPOSE 8080
+ENTRYPOINT ["tini", "--"]
+CMD ["npm", "start"]
+

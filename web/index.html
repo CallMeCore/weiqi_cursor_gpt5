@@ -11,6 +11,7 @@
       <header>
         <h1>在线围棋 - 人机对战</h1>
         <div class="controls">
+          
           <label>棋盘大小
             <select id="boardSize">
               <option value="19" selected>19</option>
@@ -25,6 +26,16 @@
             <select id="humanColor">
               <option value="B" selected>黑</option>
               <option value="W">白</option>
+            </select>
+          </label>
+          <label>AI思考(秒)
+            <input id="aiTime" type="number" min="1" max="10" step="1" value="5" />
+          </label>
+          <label>对弈模式
+            <select id="mode">
+              <option value="human-ai" selected>人机</option>
+              <option value="human-human">人人</option>
+              <option value="ai-ai">机机</option>
             </select>
           </label>
           <button id="startBtn">开始对局</button>
